@@ -18,10 +18,16 @@ services:
       build:
         dockerfile: Dockerfile
         context: ./server
+      environment:
+      - MONGO_INITDB_DATABASE=animal_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
       volumes:
         - ./server:/app
       ports:
         - 5000:5000
+      networks:
+      - shared-network
   mongo-server:
     image: mongo:latest     #Possiamo specificare 'immagine anche da qui senza usare un Dockerfile
     hostname: test_mongodb  #cambia l'hostname da mongo-server a test_mongo

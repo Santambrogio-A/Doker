@@ -70,3 +70,5 @@ services: #Ogni servizio ha una serie di opzioni che descrivono come il containe
 
 # Una immagine Docker è un pacchetto che contiene tutto il necessario per eseguire un'applicazione o un processo solitamente inculde
 # il codice sorgente, le dipendenze, le configurazioni e tutto il necessario per far partire l'applicazione
+
+# docker-compose.yml è un file di configurazione utilizzato da Docker Compose, uno strumento che consente di gestire più container Docker come un'unica applicazione

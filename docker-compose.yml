@@ -1,41 +1,72 @@
 version: '3.7'
-services:
+
+services: #Ogni servizio ha una serie di opzioni che descrivono come il container deve essere costruito, configurato e avviato
+
   client:
-      build:
+
+      build:       #specifica la directory da utilizzare per la costruzione dell'immagine del container per quel servizio
+
         dockerfile: Dockerfile
+
         context: ./client
-      volumes:
+
+      volumes:  # specifica quali parti del sistema di file del container devono essere montate sull'host
+
         #In questo modo dico a docker di usare la cartella del container /app/node_modules come volume
         #La cartella locale node_modules (se non ha modifiche) non verrà più copiata perchè il volume esiste già
         #Se c'è già l'immagine docker-compose non la builda
         - /app/node_modules 
+
         #Qui mappa tutto il contenuto della cartella locale client nella cartella app dell'immagine
         #Ricorda che la WORKDIR dell'immagine è la cartella app
         - ./client:/app
-      ports:
+
+      ports:  #specifica quali porte del container devono essere esposte all'host
         - 4200:4200
+  
   server:
-      build:
+
+      build:   #specifica la directory da utilizzare per la costruzione dell'immagine del container per quel servizio
+
         dockerfile: Dockerfile
+
         context: ./server
-      environment:
+
+      environment: #specifica le variabili d'ambiente che devono essere impostate all'interno del container
+
       - MONGO_INITDB_DATABASE=animal_db
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=pass
-      volumes:
+
+      volumes: # specifica quali parti del sistema di file del container devono essere montate sull'host
         - ./server:/app
-      ports:
+
+      ports: # specifica quali porte del container devono essere esposte all'host
         - 5000:5000
+
   mongo-server:
-    image: mongo:latest     #Possiamo specificare 'immagine anche da qui senza usare un Dockerfile
+
+    image: mongo:latest    #specifica l'immagine Docker pre-esistente da utilizzare per il servizio
+
     hostname: test_mongodb  #cambia l'hostname da mongo-server a test_mongo
-    environment:            #setta alcune variabili d'ambiente
+
+    environment:           #specifica le variabili d'ambiente che devono essere impostate all'interno del container
+
       - MONGO_INITDB_DATABASE=animal_db
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=pass
-    volumes:
+
+    volumes: # specifica quali parti del sistema di file del container devono essere montate sull'host
+      
       #Crea un nuovo bineded volume per il container di mongoDB (condividento il file init-db.js)
-      # https://stackoverflow.com/questions/42912755/how-to-create-a-db-for-mongodb-container-on-start-up
-      - ./mongo-server/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro    
-    ports:
+      #Un volume bind-mounted in Docker è un modo per condividere i file tra il sistema host e il container. Consente di mappare
+      #una directory o un file sul sistema host all'interno del container, in modo che i file all'interno del container siano sincronizzati con quelli sul sistema host.
+      - ./mongo-server/init-db.js:/docker-entrypoint-initdb.d/init-db.js:ro    #
+    
+    ports:  # specifica quali porte del container devono essere esposte all'host
       - 27017:27017
+
+# Le variabili d'ambiente per Docker sono impostazioni che possono essere passate al container quando questo viene avviato
+
+# Una immagine Docker è un pacchetto che contiene tutto il necessario per eseguire un'applicazione o un processo solitamente inculde
+# il codice sorgente, le dipendenze, le configurazioni e tutto il necessario per far partire l'applicazione

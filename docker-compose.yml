@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.7' # la versione che viene utilizzata di docker
 
 services: #Ogni servizio ha una serie di opzioni che descrivono come il container deve essere costruito, configurato e avviato
 

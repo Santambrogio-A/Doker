@@ -34,3 +34,4 @@ copiare i file dell'applicazione nell'immagine, impostare le variabili d'ambient
 Cosa serve run ?
 In un Dockerfile viene utilizzato per eseguire comandi all'interno del contesto dell'immagine Docker durante il processo di creazione dell'immagine stessa.
 
+Viene avviato e utilizzato nel browser
